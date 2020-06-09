@@ -18,7 +18,7 @@ var imageRoutes = require("./routes/images");
 var commentRoutes = require("./routes/comments");
 var indexRoutes = require("./routes/index");
 
-mongoose.connect("mongodb+srv://SweetScientist:LeDeveloper23$@cluster0-claop.mongodb.net/pikpokdb?retryWrites=true&w=majority", { 
+mongoose.connect(DATABASEURL, { 
 	useNewUrlParser: true,
 	useCreateIndex: true,
 	useUnifiedTopology: true
