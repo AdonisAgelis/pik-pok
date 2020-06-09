@@ -10,6 +10,8 @@ var express = require("express"),
 	Comment = require("./models/comment"),
 	User = require("./models/user");
 
+var port = process.env.PORT || 3000;
+
 // Requiring Routes
 
 var imageRoutes = require("./routes/images");
@@ -59,6 +61,6 @@ app.use("/", indexRoutes);
 app.use("/images", imageRoutes);
 app.use("/images/:id/comments", commentRoutes);
 
-app.listen(3000, function(){
+app.listen(port, function(){
 	console.log("Server is up...");
 });
