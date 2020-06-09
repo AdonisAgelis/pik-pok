@@ -1,0 +1,50 @@
+<%- include("../partials/header") %>
+
+	<style>
+		@media (min-width: 768px) {
+			.thumbnail img {
+				object-fit: cover;
+				height: 200px;
+				width: 100%;
+			}
+		}
+	</style>
+
+<header class="jumbotron">
+		<div class="container">
+			<h1 class="profile"><%= user.username %> Profile</h1>
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+			<div class="card">
+			  <img src="<%= user.avatar %>" alt="John" style="width:100%">
+			  <h2><%= user.firstName + " " + user.lastName %></h2>
+			  <p class="title"><%= user.email %></p>
+			  <p>Date of Birth</p>
+			  <a href="#" class="ln"><i class="fa fa-facebook"></i></a>
+			  <a href="#" class="ln"><i class="fa fa-instagram"></i></a>
+			  <a href="#" class="ln"><i class="fa fa-twitter"></i></a>
+			  <a href="#" class="ln"><i class="fa fa-linkedin"></i></a>
+			  <p><button class="bt">Contact</button></p>
+			</div>
+		</div>
+</header>
+
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <% images.forEach(function(image){ %>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="thumbnail">
+                   <img src="<%= image.image %>">
+                   <div class="caption">
+						   <form class="delete-form" action="/images/<%= image._id %>/like" method="POST">	   
+							   <button class="btn btn-primary">
+								   <span><i class="far fa-heart"></i> <%= image.likes.length %></span>
+							   </button>
+						   </form>
+						   <a href="/images/<%= image._id %>" class="btn btn-primary"><i class="far fa-comment-alt"></i></a>
+                   </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+<%- include("../partials/footer") %>

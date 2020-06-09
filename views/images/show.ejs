@@ -1,0 +1,115 @@
+<%- include("../partials/header") %>
+
+	<div class="row">
+		<div class="col-md-3 show">
+			<p class="lead"></p>
+			<div class="list-group">
+				<li class="list-group-item active">Info 1</li>
+				<li class="list-group-item">Info 2</li>
+				<li class="list-group-item">Info 3</li>
+			</div>
+		</div>
+		<div class="col-md-9 showimg">
+			<div class="thumbnail">
+				<img class="img-responsive" src=" <%= image.image %>">
+				<div class="caption-full">
+					<div class="pull-right">
+                        <button type="button" class="btn btn-xs btn-primary" data-toggle="modal"
+                                data-target="#imageLikes">
+                            <span>Total likes: <i class="fas fa-thumbs-up"></i> <%= image.likes.length %></span>
+                        </button>
+                    </div>
+                    <div style="padding-bottom: 10px;">
+                        <form action="/images/<%= image._id %>/like" method="POST">
+                            <div class="btn-group">
+                                <% if (currentUser && image.likes.some(function (like) {
+                                    return like.equals(currentUser._id)
+                                })) { %>
+                                <button class="btn btn-sm btn-primary">
+                                    <i class="fas fa-thumbs-up"></i> Liked (<%= image.likes.length %>)
+                                </button>
+                                <% } else { %>
+                                <button class="btn btn-sm btn-secondary">
+                                    <i class="fas fa-thumbs-up"></i> Like (<%= image.likes.length %>)
+                                </button>
+                                <% } %>
+                                <button type="button" class="btn btn-sm btn-default" data-toggle="modal"
+                                        data-target="#imageLikes">See more details
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+					<p> <%= image.description %></p>
+					<p>
+						<em>Submitted by: <a href="/users/<%= image.author.id %>"> <%= image.author.username %> </a>, <%= moment(image.createdAt).fromNow() %></em>
+					</p>
+					<% if(currentUser && image.author.id.equals(currentUser._id)){ %>
+						<a class="btn btn-warning" href="/images/<%= image._id %>/edit">Edit</a>
+						<form class="delete-form" action="/images/<%= image._id %>?_method=DELETE" method="POST">
+							<button class="btn btn-danger">Delete</button>
+						</form>
+					<% } %>
+				</div>
+			</div>
+			<div class="well">
+				<div class="text-right">
+					<a class="btn btn-success" href="/images/<%= image._id %>/comments/new">Add New Comment</a>
+				</div>
+				<hr>
+				<% image.comments.forEach(function(comment){ %>
+					<div class="row">
+						<div class="col-md-12">
+							<strong><%= comment.author.username %></strong>
+							<span class="pull-right"><%= moment(comment.createdAt).fromNow() %></span>
+							<p><%= comment.text %></p>
+							<% if(currentUser && comment.author.id.equals(currentUser._id)){ %>
+							<span class="pull-right">
+								<a class="btn btn-xs btn-warning" href="/images/<%= image._id %>/comments/<%= comment._id %>/edit">Edit</a>
+								<form class="delete-form" action="/images/<%= image._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+									<button class="delete-form btn btn-xs btn-danger">Delete</button>
+								</form>
+							</span>
+							<% } %>
+						</div>
+					</div>
+				<% }); %>
+			</div>
+		</div>
+	</div>
+
+	<div id="imageLikes" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Post likes: <%= image.likes.length %></h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Liked by:</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <% image.likes.forEach(function(like) { %>
+                        <tr>
+                            <td><span class="badge"><i class="fas fa-user"></i></span> <%= like.username %></td>
+                        </tr>
+                    <% }); %>
+                    <% if (image.likes.length === 0) { %>
+                        <tr>
+                            <td><em>No likes yet.</em></td>
+                        </tr>
+                    <% } %>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include("../partials/footer") %>

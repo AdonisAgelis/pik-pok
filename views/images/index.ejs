@@ -1,0 +1,49 @@
+<%- include("../partials/header") %>
+
+	<style>
+		@media (min-width: 768px) {
+			.thumbnail img {
+				object-fit: cover;
+				height: 200px;
+				width: 100%;
+			}
+		}
+	</style>
+
+	<header class="jumbotron">
+		<div class="container">
+			<h1>Welcome to <span class="logo">PikPok</span></h1>
+			<p>Share your images and connect with your friends and family!</p>
+			<p>
+				<a class="btn btn-primary btn-lg" href="/images/new">New Post</a>
+			</p>
+			<p>
+				<form action="/images" method="GET" class="form-inline">
+					<div class="form-group">
+						<input type="text" name="search" placeholder="Search Post..." class="form-control">
+						<input type="submit" value="Search" class="btn btn-default">
+					</div>
+				</form>
+			</p>
+		</div>
+	</header>
+	
+	<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <% images.forEach(function(image){ %>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="thumbnail">
+                   <img src="<%= image.image %>">
+                   <div class="caption">
+						   <form class="delete-form" action="/images/<%= image._id %>/like" method="POST">	   
+							   <button class="btn btn-primary">
+								   <span><i class="far fa-heart"></i> <%= image.likes.length %></span>
+							   </button>
+						   </form>
+						   <a href="/images/<%= image._id %>" class="btn btn-primary"><i class="far fa-comment-alt"></i></a>
+                   </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+<%- include("../partials/footer") %>

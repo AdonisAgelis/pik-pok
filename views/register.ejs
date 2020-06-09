@@ -1,0 +1,33 @@
+<%- include("./partials/header") %>
+
+<div class="row">
+    <h1 style="text-align: center">Sign Up</h1>
+    <div style="width: 30%; margin: 25px auto;">
+        <form id="form" action="/register" method="POST">
+            <div class="form-group">
+                <input class="form-control" type="text" name="username" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="password" placeholder="Password" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{5,10}$" title="Password needs to start with a letter and contain 6 to 10 characters!" required>
+            </div>
+			<div class="form-group">
+                <input class="form-control" type="text" name="firstName" placeholder="First Name">
+            </div>
+			<div class="form-group">
+                <input class="form-control" type="text" name="lastName" placeholder="Last Name">
+            </div>
+			<div class="form-group">
+                <input class="form-control" type="email" name="email" placeholder="Email" required>
+            </div>
+			<div class="form-group">
+                <input class="form-control" type="text" name="avatar" placeholder="Avatar Image URL">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-lg btn-primary btn-block">Sign Up!</button>
+            </div>
+        </form>
+        <a href="/images">Go Back</a>
+    </div>
+</div>
+
+<%- include("./partials/footer") %>
