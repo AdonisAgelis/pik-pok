@@ -16,7 +16,16 @@ var imageRoutes = require("./routes/images");
 var commentRoutes = require("./routes/comments");
 var indexRoutes = require("./routes/index");
 
-mongoose.connect("mongodb://localhost/pikpok", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect("mongodb+srv://SweetScientist:LeDeveloper23$@cluster0-claop.mongodb.net/pikpokdb?retryWrites=true&w=majority", { 
+	useNewUrlParser: true,
+	useCreateIndex: true,
+	useUnifiedTopology: true
+}).then(() => {
+	console.log("Connected to PikPok DB!");
+}).catch(err => {
+	console.log("Error:", err.message);
+});
+
 mongoose.set("useFindAndModify", false);
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
