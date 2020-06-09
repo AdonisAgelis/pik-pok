@@ -18,7 +18,7 @@ var imageRoutes = require("./routes/images");
 var commentRoutes = require("./routes/comments");
 var indexRoutes = require("./routes/index");
 
-mongoose.connect(DATABASEURL, { 
+mongoose.connect(process.env.DATABASEURL, { 
 	useNewUrlParser: true,
 	useCreateIndex: true,
 	useUnifiedTopology: true
